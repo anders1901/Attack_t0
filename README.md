@@ -6,7 +6,7 @@ This repository contains the artifact related to the corresponding article.
 
 The following material requires:
 
-* Python >= 3.9
+* Python >= 3.0
 * Pipenv
 * lpsolve5.5
 * Dilithium (commit 3e9b9f1)
