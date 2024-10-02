@@ -60,7 +60,7 @@ sudo apt-get install openssl libssl-dev
 
 ## Uncompressing t0 from standard signatures
 
-1. Install Virtual Environment Dependencies:
+1. Install Virtual Environment Dependencies in `Attack_t0/`:
 ```bash 
 pipenv install
 ```
