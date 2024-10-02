@@ -38,7 +38,7 @@ If not installed, run:
 ```bash
 sudo pip install --user pipenv --break-system-packages  
 ```   
-If a Warning appears saying that ppipenv and pipenv-resolver are installed somewhere not in PATH you can run:
+If a Warning appears saying that pipenv and pipenv-resolver are installed somewhere not in PATH you can run:
 ```bash
 echo 'export PATH="<path_to_local_pipenv_bin>:$PATH"' >> ~/.bash_profile  
 source ~/.bash_profile
