@@ -52,8 +52,7 @@ sh ccc
 This will create a shared library file in ```lp_solve_5.5/lpsolve55/bin/<rest_of_path>```
 
 
-5. Install OpenSSL (if needed)
-For some of the test, the Dilithium reference implementation requires OpenSSL. Install it with:
+5. The Dilithium reference implementation requires OpenSSL, install it with:
 ```bash
 sudo apt-get install openssl libssl-dev
 ```
