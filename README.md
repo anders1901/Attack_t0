@@ -4,7 +4,7 @@ This repository contains the artifact related to the corresponding article.
 
 ## Prerequisites
 
-Tha following material requires:
+The following material requires:
 
 * Python >= 3.9
 * Pipenv
