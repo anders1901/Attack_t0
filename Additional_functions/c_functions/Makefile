@@ -27,10 +27,10 @@ build_solve_t0_lp2: build_solve_t0_lp.c $(ALL_SOURCES) $(ALL_HEADERS)
 	$(CC) $(CFLAGS) -DDILITHIUM_MODE=2 -o $@ $< $(ALL_SOURCES) -I$(LPLIB_PATH)/lp_solve_5.5/ -L$(LPLIB_PATH)/lp_solve_5.5/lpsolve55/bin/ux64 -llpsolve55
 
 build_solve_t0_lp3: build_solve_t0_lp.c $(ALL_SOURCES) $(ALL_HEADERS)
-	$(CC) $(CFLAGS) -DDILITHIUM_MODE=3 -o $@ $< $(ALL_SOURCES) -I/home/amina/Documents/kali/lp_solve_5.5/ -L/home/amina/Documents/kali/lp_solve_5.5/lpsolve55/bin/ux64 -llpsolve55
+	$(CC) $(CFLAGS) -DDILITHIUM_MODE=3 -o $@ $< $(ALL_SOURCES) -I$(LPLIB_PATH)/lp_solve_5.5/ -L$(LPLIB_PATH)/lp_solve_5.5/lpsolve55/bin/ux64 -llpsolve55
 
 build_solve_t0_lp5: build_solve_t0_lp.c $(ALL_SOURCES) $(ALL_HEADERS)
-	$(CC) $(CFLAGS) -DDILITHIUM_MODE=5 -o $@ $< $(ALL_SOURCES) -I/home/amina/Documents/kali/lp_solve_5.5/ -L/home/amina/Documents/kali/lp_solve_5.5/lpsolve55/bin/ux64 -llpsolve55
+	$(CC) $(CFLAGS) -DDILITHIUM_MODE=5 -o $@ $< $(ALL_SOURCES) -I$(LPLIB_PATH)/lp_solve_5.5/ -L$(LPLIB_PATH)/lp_solve_5.5/lpsolve55/bin/ux64 -llpsolve55
 
 clean:
 	rm -f sign_rdm_msg_and_save2 sign_rdm_msg_and_save3 sign_rdm_msg_and_save5 build_solve_t0_lp2 build_solve_t0_lp3 build_solve_t0_lp5
