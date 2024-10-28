@@ -1,4 +1,6 @@
+###########################################
 ### Setting the parameters of Dilithium ###
+###########################################
 
 # Dilithium security level, change this variable first before any analysis 
 MODE = 2
@@ -8,6 +10,7 @@ SEEDBYTES = 2*32
 
 # Size in hexa string length of hashes and seeds
 CRHBYTES = 2*64
+TRBYTES  = 2*64
 
 # Dilithium modulus and its bit size
 Q = 8380417
@@ -56,6 +59,9 @@ if MODE == 2 :
     GAMMA2 = (Q - 1)//88
     ALPHA = 2*GAMMA2
 
+    # Size of c seed 
+    CTILDEBYTES = 2*32
+
 elif MODE == 3 :
     # Size of vectors
     K = 6
@@ -81,6 +87,9 @@ elif MODE == 3 :
     GAMMA2 = (Q - 1)//32
     ALPHA = 2*GAMMA2
 
+    # Size of c seed 
+    CTILDEBYTES = 2*48
+
 elif MODE == 5 :
     # Size of vectors
     K = 8
@@ -105,6 +114,9 @@ elif MODE == 5 :
     # For decomposition modulo +/- ALPHA (Decompose)
     GAMMA2 = (Q - 1)//32
     ALPHA = 2*GAMMA2
+
+    # Size of c seed 
+    CTILDEBYTES = 2*64
 
 # Size of one polynomial of t1 packed
 POLT1_SIZE_PACKED = ((N*(QBITS - D))//8)
