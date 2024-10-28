@@ -225,7 +225,7 @@ void polyw0_unpack(poly *r, const uint8_t *a) {
  *              - const polyveck *h: pointer to hint vector h
  **************************************************/
 void pack_sig_compressed(uint8_t sig_compressed[MLEN + COMP_CRYPTO_BYTES],
-                         const uint8_t sig[CRYPTO_BYTES], const polyveck *r0) {
+                         const uint8_t sig[MLEN + CRYPTO_BYTES], const polyveck *r0) {
   unsigned int i;
 
   for (i = 0; i < CTILDEBYTES; ++i)

@@ -1,4 +1,4 @@
-DILITHIUM_PATH = ../../dilithium-master/ref
+DILITHIUM_PATH = ../../dilithium/ref
 LPLIB_PATH ?= ../..
 
 CC ?= /usr/bin/cc
