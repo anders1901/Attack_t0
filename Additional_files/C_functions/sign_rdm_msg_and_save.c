@@ -133,26 +133,26 @@ int main(int argc, char const *argv[])
     return DATA_ERROR;
   }
 
-  sprintf(directory, "../../signs/");
+  sprintf(directory, "../Signs/");
   if (stat(directory, &st) == -1)
   {
     mkdir(directory, 0700);
   }
 
-  sprintf(directory, "../../signs/%.16s/", CRYPTO_ALGNAME);
+  sprintf(directory, "../Signs/%.16s/", CRYPTO_ALGNAME);
   if (stat(directory, &st) == -1)
   {
     mkdir(directory, 0700);
   }
 
-  sprintf(directory, "../../signs/%.16s/key%d/", CRYPTO_ALGNAME, sk_index);
+  sprintf(directory, "../Signs/%.16s/key%d/", CRYPTO_ALGNAME, sk_index);
   if (stat(directory, &st) == -1)
   {
     mkdir(directory, 0700);
   }
 
   sprintf(sign_compressed_file_name,
-          "../../signs/%.16s/key%d/PQCsignKAT_%.16s_compressed.rsp",
+          "../Signs/%.16s/key%d/PQCsignKAT_%.16s_compressed.rsp",
           CRYPTO_ALGNAME, sk_index, CRYPTO_ALGNAME);
   if ((sign_compressed_file = fopen(sign_compressed_file_name, "w")) == NULL)
   {

@@ -1,8 +1,5 @@
 import os
-# import sys
 
-# import math
-# import time 
 import copy as py_copy
 
 from datetime import timedelta
@@ -48,7 +45,7 @@ def print_np_file_infos(npz_file_name):
     return loaded_array
 
     
-def open_keys(nb_keys = 1, include_sk = True, keys_file_name = f"dilithium-master/ref/PQCsignKAT_Dilithium{dilithium.MODE}.rsp"):
+def open_keys(nb_keys = 1, include_sk = True, keys_file_name = f"dilithium/ref/PQCsignKAT_Dilithium{dilithium.MODE}.rsp"):
     """
     This function reads nb_keys dilithium keys from the file keys_file_name. 
                 

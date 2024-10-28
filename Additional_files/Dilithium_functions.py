@@ -230,8 +230,8 @@ def unpack_sk(sk):
     offset += SEEDBYTES
 
     # tr
-    tr = sk[offset : offset + 2*TRBYTES]
-    offset += 2*TRBYTES
+    tr = sk[offset : offset + TRBYTES]
+    offset += TRBYTES
 
 
     # s1

@@ -86,38 +86,38 @@ int main(int argc, char const *argv[]) {
   char directory[32];
   struct stat st = {0};
 
-  sprintf(directory, "../../guess/");
+  sprintf(directory, "../Guess/");
   if (stat(directory, &st) == -1) {
     mkdir(directory, 0700);
   }
 
-  sprintf(directory, "../../guess/%.16s/", CRYPTO_ALGNAME);
+  sprintf(directory, "../Guess/%.16s/", CRYPTO_ALGNAME);
   if (stat(directory, &st) == -1) {
     mkdir(directory, 0700);
   }
 
-  sprintf(directory, "../../guess/%.16s/key%d/", CRYPTO_ALGNAME, sk_index);
+  sprintf(directory, "../Guess/%.16s/key%d/", CRYPTO_ALGNAME, sk_index);
   if (stat(directory, &st) == -1) {
     mkdir(directory, 0700);
   }
 
-  sprintf(directory, "../../lps/");
+  sprintf(directory, "../Lps/");
   if (stat(directory, &st) == -1) {
     mkdir(directory, 0700);
   }
 
-  sprintf(directory, "../../lps/%.16s/", CRYPTO_ALGNAME);
+  sprintf(directory, "../Lps/%.16s/", CRYPTO_ALGNAME);
   if (stat(directory, &st) == -1) {
     mkdir(directory, 0700);
   }
 
-  sprintf(directory, "../../lps/%.16s/key%d/", CRYPTO_ALGNAME, sk_index);
+  sprintf(directory, "../Lps/%.16s/key%d/", CRYPTO_ALGNAME, sk_index);
   if (stat(directory, &st) == -1) {
     mkdir(directory, 0700);
   }
 
   sprintf(sign_compressed_file_name,
-          "../../signs/%.16s/key%d/PQCsignKAT_%.16s_compressed.rsp",
+          "../Signs/%.16s/key%d/PQCsignKAT_%.16s_compressed.rsp",
           CRYPTO_ALGNAME, sk_index, CRYPTO_ALGNAME);
   if ((sign_compressed_file = fopen(sign_compressed_file_name, "r")) == NULL) {
     printf("Couldn't open <%s> for read\n", sign_compressed_file_name);
@@ -125,7 +125,7 @@ int main(int argc, char const *argv[]) {
   }
 
   sprintf(t0_guess_filename,
-          "../../guess/%.16s/key%d/t0_guess_file.bin",
+          "../Guess/%.16s/key%d/t0_guess_file.bin",
           CRYPTO_ALGNAME, sk_index);
   t0_guess_file = fopen(t0_guess_filename, "rb");
   if (t0_guess_file == NULL) {
@@ -338,7 +338,7 @@ int main(int argc, char const *argv[]) {
   if (ret == 0) {
     for (poly_index = 0; poly_index < K; poly_index++) {
       set_add_rowmode(LPs[poly_index], FALSE);
-      sprintf(name_lp_file, "../../lps/%.16s/key%d/poly%d.lp",
+      sprintf(name_lp_file, "../Lps/%.16s/key%d/poly%d.lp",
               CRYPTO_ALGNAME, sk_index, poly_index);
       write_lp(LPs[poly_index], name_lp_file);
     }
@@ -367,7 +367,7 @@ int main(int argc, char const *argv[]) {
 
   if (ret == 0) {
     sprintf(t0_guess_filename,
-            "../../guess/%.16s/key%d/t0_guess_file.bin",
+            "../Guess/%.16s/key%d/t0_guess_file.bin",
           CRYPTO_ALGNAME, sk_index);
     t0_guess_file = fopen(t0_guess_filename, "wb");
     if (t0_guess_file == NULL) {
