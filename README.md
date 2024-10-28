@@ -80,7 +80,7 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/path/to/lp_solve_5.5/lpsolve55/bin/<res
 jupyter notebook
 ```
 
-5. Go to ```Additional_functions/notebook/```,  open the file ```Attack_t0.ipynb``` and follow the instructions.
+5. Go to ```Additional_functions/Notebooks/```,  open the file ```Attack_t0.ipynb``` and follow the instructions.
 
 
 ## Files
@@ -88,7 +88,7 @@ jupyter notebook
 | Name                   | Description                                              |
 | :---                   | :---                                                     |
 | `Additional_functions` | Additional material used for the attack                  |
-| `dilithium-master`     | Reference implementation of Dilithium from   [GitHub](https://github.com/pq-crystals/dilithium)               |
+| `dilithium`            | Reference implementation of Dilithium from [GitHub](https://github.com/pq-crystals/dilithium) |
 | `lp_solve_5.5`         | The library used to solve LP systems                     |
 
 
