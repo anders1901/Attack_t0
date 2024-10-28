@@ -14,7 +14,9 @@
 
 void compute_lb_AZ_minus_ct12d(polyveck *r0_out, poly *c_out, polyveck *h_out,
                                const uint8_t *sig, const uint8_t *m,
-                               size_t mlen, const uint8_t *pk) {
+                               size_t mlen, const uint8_t *ctx,
+                               size_t ctxlen, const uint8_t *pk)
+{
   unsigned int i, j;
   uint8_t rho[SEEDBYTES];
   uint8_t mu[CRHBYTES];
@@ -25,28 +27,35 @@ void compute_lb_AZ_minus_ct12d(polyveck *r0_out, poly *c_out, polyveck *h_out,
   keccak_state state;
 
   unpack_pk(rho, &t1, pk);
-  if (unpack_sig(c, &z, &h, sig)) {
+  if (unpack_sig(c, &z, &h, sig))
+  {
     printf("problem\n");
   }
 
-  // printf("debug :\n");
-  for (i = 0; i < K; i++) {
-    for (j = 0; j < N; j++) {
+  for (i = 0; i < K; i++)
+  {
+    for (j = 0; j < N; j++)
+    {
       h_out->vec[i].coeffs[j] = h.vec[i].coeffs[j];
     }
   }
 
   /* Compute CRH(H(rho, t1), msg) */
-  shake256(mu, CRHBYTES, pk, CRYPTO_PUBLICKEYBYTES);
+  shake256(mu, TRBYTES, pk, CRYPTO_PUBLICKEYBYTES);
   shake256_init(&state);
-  shake256_absorb(&state, mu, CRHBYTES);
+  shake256_absorb(&state, mu, TRBYTES);
+  mu[0] = 0;
+  mu[1] = ctxlen;
+  shake256_absorb(&state, mu, 2);
+  shake256_absorb(&state, ctx, ctxlen);
   shake256_absorb(&state, m, mlen);
   shake256_finalize(&state);
   shake256_squeeze(mu, CRHBYTES, &state);
 
   /* Matrix-vector multiplication; compute Az - c2^dt1 */
-  poly_challenge(&cp, c); /* uses only the first SEEDBYTES bytes of c */
-  for (i = 0; i < N; i++) {
+  poly_challenge(&cp, c);
+  for (i = 0; i < N; i++)
+  {
     c_out->coeffs[i] = cp.coeffs[i];
   }
 
@@ -67,21 +76,27 @@ void compute_lb_AZ_minus_ct12d(polyveck *r0_out, poly *c_out, polyveck *h_out,
   /* Reconstruct w1 */
   polyveck_caddq(&r);
   polyveck_decompose(&r, &r0, &r);
-  for (i = 0; i < K; i++) {
-    for (j = 0; j < N; j++) {
+  for (i = 0; i < K; i++)
+  {
+    for (j = 0; j < N; j++)
+    {
       r0_out->vec[i].coeffs[j] = r0.vec[i].coeffs[j];
     }
   }
 }
 
-int main(int argc, char const *argv[]) {
+int main(int argc, char const *argv[])
+{
   int NB_SIGNS, sk_index;
 
-  if (argc == 3) {
+  if (argc == 3)
+  {
     // Case 1: Two arguments   (int NB_inequalities, float C)
     sk_index = atoi(argv[1]);
     NB_SIGNS = atoi(argv[2]);
-  } else {
+  }
+  else
+  {
     // Invalid number of arguments
     printf("Usage:\n");
     printf("  %s <int> <int>\n", argv[0]);
@@ -110,66 +125,80 @@ int main(int argc, char const *argv[]) {
 
   struct stat st = {0};
 
-  sprintf(fn_rsp, "../../dilithium-master/ref/PQCsignKAT_%.16s.rsp",
+  sprintf(fn_rsp, "../../dilithium/ref/PQCsignKAT_%.16s.rsp",
           CRYPTO_ALGNAME);
-  if ((fp_rsp = fopen(fn_rsp, "r")) == NULL) {
+  if ((fp_rsp = fopen(fn_rsp, "r")) == NULL)
+  {
     printf("Couldn't open <%s> for read\n", fn_rsp);
     return DATA_ERROR;
   }
 
   sprintf(directory, "../../signs/");
-  if (stat(directory, &st) == -1) {
+  if (stat(directory, &st) == -1)
+  {
     mkdir(directory, 0700);
   }
 
   sprintf(directory, "../../signs/%.16s/", CRYPTO_ALGNAME);
-  if (stat(directory, &st) == -1) {
+  if (stat(directory, &st) == -1)
+  {
     mkdir(directory, 0700);
   }
 
   sprintf(directory, "../../signs/%.16s/key%d/", CRYPTO_ALGNAME, sk_index);
-  if (stat(directory, &st) == -1) {
+  if (stat(directory, &st) == -1)
+  {
     mkdir(directory, 0700);
   }
 
   sprintf(sign_compressed_file_name,
           "../../signs/%.16s/key%d/PQCsignKAT_%.16s_compressed.rsp",
           CRYPTO_ALGNAME, sk_index, CRYPTO_ALGNAME);
-  if ((sign_compressed_file = fopen(sign_compressed_file_name, "w")) == NULL) {
+  if ((sign_compressed_file = fopen(sign_compressed_file_name, "w")) == NULL)
+  {
     printf("Couldn't open <%s> for write\n", sign_compressed_file_name);
     return DATA_ERROR;
   }
 
-  do {
-    if (FindMarker(fp_rsp, "count = ")) {
-      if (fscanf(fp_rsp, "%d", &count) != 1) {
+  do
+  {
+    if (FindMarker(fp_rsp, "count = "))
+    {
+      if (fscanf(fp_rsp, "%d", &count) != 1)
+      {
         printf("Parse error\n");
         exit(-1);
       }
-    } else {
+    }
+    else
+    {
       break;
     }
 
-    if (!ReadHex(fp_rsp, pk, (int)CRYPTO_PUBLICKEYBYTES, "pk = ")) {
+    if (!ReadHex(fp_rsp, pk, (int)CRYPTO_PUBLICKEYBYTES, "pk = "))
+    {
       printf("ERROR: unable to read 'pk' from <%s>\n", fn_rsp);
       return DATA_ERROR;
     }
-    if (!ReadHex(fp_rsp, sk, (int)CRYPTO_SECRETKEYBYTES, "sk = ")) {
+    if (!ReadHex(fp_rsp, sk, (int)CRYPTO_SECRETKEYBYTES, "sk = "))
+    {
       printf("ERROR: unable to read 'sk' from <%s>\n", fn_rsp);
       return DATA_ERROR;
     }
 
   } while (count < sk_index);
 
-  for (i = 0; i < NB_SIGNS; i++) {
-    randombytes(m, MLEN); /* Random MLEN = 32 bytes msg */
+  for (i = 0; i < NB_SIGNS; i++)
+  {
+    randombytes(m, MLEN);                          /* Random MLEN = 32 bytes msg */
     crypto_sign(sm, &smlen, m, MLEN, NULL, 0, sk); /* Get standard signature */
     compute_lb_AZ_minus_ct12d(&r0, &c, &h, sm, m, MLEN,
-                              pk); /* Retreive LowBits(A.z - c.t_{1}.2^{d}) */
+                              NULL, 0, pk); /* Retreive LowBits(A.z - c.t_{1}.2^{d}) */
     pack_sig_compressed(sm_compressed, sm, &r0);
     fprintBstr(sign_compressed_file, "", sm_compressed,
                MLEN + COMP_CRYPTO_BYTES);
-    if (i % 1000 == 0) {
+    if (i % 1000 == 0)
+    {
       printf("%d/%d\r", i, NB_SIGNS);
       fflush(stdout);
     }

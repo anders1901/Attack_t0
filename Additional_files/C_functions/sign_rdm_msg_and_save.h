@@ -16,11 +16,12 @@
 #include "sign.h"
 #include "symmetric.h"
 
-#define COMP_CRYPTO_BYTES                                                      \
+#define COMP_CRYPTO_BYTES \
   (CTILDEBYTES + K * POLYZ_PACKEDBYTES + POLYVECH_PACKEDBYTES)
 
 void compute_lb_AZ_minus_ct12d(polyveck *r0_out, poly *c_out, polyveck *h_out,
                                const uint8_t *sig, const uint8_t *m,
-                               size_t mlen, const uint8_t *pk);
+                               size_t mlen, const uint8_t *ctx,
+                               size_t ctxlen, const uint8_t *pk);
 
 #endif // SIGN_RDM_MSG_AND_SAVE_H
